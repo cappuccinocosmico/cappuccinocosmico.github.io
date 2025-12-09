@@ -1,11 +1,3 @@
-+++
-title = "Dynamite Rice"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # V0
 
 - One 2lb bag of tillapia

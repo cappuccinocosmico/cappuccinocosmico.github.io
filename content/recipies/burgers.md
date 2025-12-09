@@ -1,11 +1,3 @@
-+++
-title = "Burgers"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Fat:
 1 cup water 
 1.5 tbsp methyl-cellulose

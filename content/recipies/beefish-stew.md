@@ -1,11 +1,3 @@
-+++
-title = "Beefish Stew"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # V2 
 - Added a heaping small spoon of yeast extract. I am pretty confident just upping this + msg would allow a pretty good version without the beef base.
 - 

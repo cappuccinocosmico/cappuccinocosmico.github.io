@@ -1,11 +1,3 @@
-+++
-title = "Power Mapping Has Been Underwhelming"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Hey, this video, and the series as a whole, has been absolutely incredible so far.
 
 I just wanted to bring up this minor nitpick namely that IMO actual organizers developing power maps often seems more effective in theory than in practice.

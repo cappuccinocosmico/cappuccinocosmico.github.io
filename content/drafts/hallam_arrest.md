@@ -1,11 +1,3 @@
-+++
-title = "Hallam Arrest"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ---
 title: Security Culture and Roger Hallam
 summary: What can we learn from bad security culture?

@@ -1,11 +1,3 @@
-+++
-title = "New Activists"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 1. FUCKING DO SOMETHING: Anything. It doesn't matter what. The important thing is to get in the habit of taking action based on your political beliefs. The best research on this (from books like "Making of a Pro Life Activist") is that caring about and believing in a cause in the abstract doesn't tend to lead anywhere. It suggests that the most dedicated activists were indifferent towards the cause in the beginning, but took action early and got caught in a beneficial cycle where their beliefs inspired them to take action, and said activism connected them with more reasons to care about the cause. Whatever you do, try to get this cycle started for yourself.
 
 2. Have Fun: Treating activism as a hobby like a D&D game night or other social encounter has a ton of benefits. In the beginning it might not matter that your activism isn't fun, but this motivation/willpower waxes and wanes over time, so set yourself up for success by having other reasons for doing activism. Also your friends will provide peer pressure to keep doing it, and that's just a nice bonus :) If you aren't having fun in an organizing space, don't wait for the resentment and burnout to reach a peak, explore and try to find something fulfilling.

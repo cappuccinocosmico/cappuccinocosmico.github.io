@@ -1,11 +1,3 @@
-+++
-title = "Carbanara"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Base:
 
 ▪650g (1 1/2 lbs) thick cut bacon

@@ -1,11 +1,3 @@
-+++
-title = "Crisp Powder"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # Crisp Powder 
 Mix these spices in these mass ratios
 Quantities are mass units 

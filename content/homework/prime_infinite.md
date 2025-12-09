@@ -1,11 +1,3 @@
-+++
-title = "Prime Infinite"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Lemma 1 
 if \prod x_n converges to a nonzero value and all x_n are positive if and only if \sum ln(x_n) converges.
 

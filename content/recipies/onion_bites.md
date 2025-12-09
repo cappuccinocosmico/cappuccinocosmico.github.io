@@ -1,11 +1,3 @@
-+++
-title = "Onion Bites"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 350 gram onion
 
 15 gram salt

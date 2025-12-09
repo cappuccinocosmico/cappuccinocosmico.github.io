@@ -1,11 +1,3 @@
-+++
-title = "Graphs Math"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 What I want to prove:
 
 # Proof: Continuity and Connected Graphs in Complete Metric Spaces

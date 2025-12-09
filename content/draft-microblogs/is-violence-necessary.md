@@ -1,12 +1,3 @@
-+++
-title = "Is Violence Necessary"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
-
 I dont think so, but I think that in order to change political systems its essential to understand that at a fundamental level states are tools for manipulating, focusing and deploying violence and power. That comes in many forms, from invading other countries, deporting people to foreign concentration camps, or leaving people to freeze to death on the streets.
 
 

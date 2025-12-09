@@ -1,11 +1,3 @@
-+++
-title = "Ideologies Toposes"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Mathematics is often presented in other diciplines as this weird dicipline where everything is perfect and knowable and somehow exists on this trancendental plane where its unaffected by uncertantinty or differences of opinion or ideology.
 
 But this isnt really the case, and discussion of the very shaky foundation mathematics is based on is hidden from almost everyone mainly since understanding the prerequesite math behind these problems requires 1-2 years of grad school after 4 years of undergrad math. And talking about it at a pop-sci level doesnt benefit anyone like engineers and computer scientists who need to know small parts of math relavent to their diciplines.

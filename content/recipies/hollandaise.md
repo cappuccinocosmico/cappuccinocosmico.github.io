@@ -1,11 +1,3 @@
-+++
-title = "Hollandaise"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ### Recipe
 
 1/4 cup lemon juice

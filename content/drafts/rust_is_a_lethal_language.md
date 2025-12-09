@@ -1,11 +1,3 @@
-+++
-title = "Rust Is A Lethal Language"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Most of the negative health consequences of alcohol (around 117 thousand per year) are completely preventable. There are other drugs out there (putting aside illegality for the moment), that target the same receptors as alcohol, and as such feel identical, but:
 
 - Don't cause any hangovers.

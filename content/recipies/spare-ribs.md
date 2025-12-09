@@ -1,11 +1,3 @@
-+++
-title = "Spare Ribs"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ### V1 
 Notes for improvement
 - More time is a good idea, I pulled it out at 22ish hours out of an abundance of caution. I feel like going up to 155 is a good move, plus actually going for the 36 hours is probably not a bad idea.

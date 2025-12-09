@@ -1,11 +1,3 @@
-+++
-title = "Pho"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 2 pieces Vietnamese licorice
 2 Fructus tsaoko (black cardamom)
 2-3 whole star anise

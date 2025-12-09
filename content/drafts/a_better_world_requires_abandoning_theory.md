@@ -1,11 +1,3 @@
-+++
-title = "A Better World Requires Abandoning Theory"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # A Better World Requires Abandoning Theory
 
 ## Our words do have power

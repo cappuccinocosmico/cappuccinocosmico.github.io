@@ -1,11 +1,3 @@
-+++
-title = "Skeleman Response 01"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ## Pendantic Critique: I think "radicals, idealists, and realists" are more "modes of problem solving" than "types of activists"
 
 There absolutely are organizations and activists that really only focus on one type. Lots of orgs do more then one type, and activists often switch what kind of tactics they bring to bear on an issue depending on what they think is most effective.

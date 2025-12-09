@@ -1,11 +1,3 @@
-+++
-title = "Webs Of Trust"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ---
 title: Movement Specific Risks
 intro: The math behind preventing infiltration.

@@ -1,11 +1,3 @@
-+++
-title = "What Is Sheaf"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Its kindof a tough question, as a somewhat weird coincedence I was doing a bunch of research on them the last couple months so here are some notes I was writing about them
 
 ## Why do people give a shit about this

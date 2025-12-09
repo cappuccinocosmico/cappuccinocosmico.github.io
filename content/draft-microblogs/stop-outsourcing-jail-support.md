@@ -1,11 +1,3 @@
-+++
-title = "Stop Outsourcing Jail Support"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Just browsing through this now, I completly agree with what everyone else has said.
 
 Moreover I dont really know what the purpose of those large jail support orgs, they only really seem to be useful to me if:

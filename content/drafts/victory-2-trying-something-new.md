@@ -1,11 +1,3 @@
-+++
-title = "Victory 2 Trying Something New"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 My favorite quote that I heard at a database development conference was, those people who have hard problems are blessed. And I like this quote because it implies that activists are probably the most blessed people on all of Earth. It is our job to go ahead and battle against the hardest battles with the most distant of odds.
 
 Whether that's collapsing income inequality and achieving some kind of equitable redistribution of resources in society. Whether that's successfully convincing oil and fossil fuel companies to take a $1 trillion loss because they won't be able to pollute anymore. Whether that's dismantling the 200-year-old institution of policing to create a more equitable world for all.

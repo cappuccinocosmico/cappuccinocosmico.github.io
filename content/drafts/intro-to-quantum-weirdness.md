@@ -1,11 +1,3 @@
-+++
-title = "Intro To Quantum Weirdness"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # What is going on with all this "Quantum Stuff"
 
 Initially started when I was doing some research on interpretations of quantum mechanics and found myself struggling to wrap my head around some of the basic math and differences between the theories. But when I tried to learn more, I found that pretty much all resources on QM boil down into:

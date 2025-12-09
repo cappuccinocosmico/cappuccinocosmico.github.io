@@ -1,11 +1,3 @@
-+++
-title = "Juristictions"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 ---
 title: What Does the Data of our app look like Post Single State and post PUC.
 author: Nic Venner

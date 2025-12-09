@@ -1,11 +1,3 @@
-+++
-title = "Explanation Of The Tides"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 So When I first saw this video by Neptunium, (And later a 3b1b video) I was curious if using only the measurement technhiques that existed back then, with the benefit of hindsight, is there another experiment one could devise to measure the distance to the sun?
 
 Using the math of lunar eclipses, the ancient greeks were able to figure out the following units with pretty high accuracy using the radius of the earth as a measuring stick.

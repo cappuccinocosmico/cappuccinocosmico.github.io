@@ -1,11 +1,3 @@
-+++
-title = "Chili Crisp"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 Thoughts
 
 - Tofu, probably 2 bricks

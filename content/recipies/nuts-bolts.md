@@ -1,11 +1,3 @@
-+++
-title = "Nuts Bolts"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 1lb 15 oz rice chex 
 1 pound wheat chex 
 1 pound cheerios 

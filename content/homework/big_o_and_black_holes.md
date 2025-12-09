@@ -1,11 +1,3 @@
-+++
-title = "Big O And Black Holes"
-date = 2025-01-01
-
-[extra]
-author = "Nicole Venner"
-+++
-
 # It is impossible to build a computer that can do array lookups in less then $cal(O)(sqrt(N))$
 
 ### Stage 1: Shouldn't an array lookup be $cal(O)(1)$?
