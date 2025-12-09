@@ -11,7 +11,11 @@
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
-    dioxus-cli
+    gcc
+    lld
+    tailwindcss_4
+    watchman
+    # dioxus-cli
   ];
 
   # https://devenv.sh/languages/
