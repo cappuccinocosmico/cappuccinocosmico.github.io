@@ -11,3 +11,4 @@ devenv.local.yaml
 
 
 target
+node_modules
