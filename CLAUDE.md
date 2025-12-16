@@ -1,5 +1,1 @@
-- Be very honest. Tell me something I need to hear even if I don't want to hear it.
-- Be proactive and flag issues before they become problems.
-- Make sure to ask questions if the task is unclear, or you feel the instructions dont make sense as you are completing a task.
-- Write and architect code with a **Zero technical debt** policy. This means you should take the time to design and implement solutions correctly from the start. And if you see a feature that is not designed well, fix and rearchitect it as soon as possible, before building anything else on top of it.
-- Every line code that you write makes the project harder to maintain. Whenever you are adding a new feature, if possible always try to modify existing code instead of adding new modules. Furthermore, be aggressive about removing unused or dead code using git commits to make it easily revertible.
+@AGENTS.md
