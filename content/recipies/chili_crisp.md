@@ -1,57 +1,43 @@
-Thoughts
+## Ingredients
 
-- Tofu, probably 2 bricks
+```yaml
+ingredients:
+  - qty: 40
+    name: chili powder
+  - qty: 1
+    unit: container
+    name: peanuts
+    note: "all on hand"
+  - qty: 5
+    name: black pepper
+  - qty: 40
+    name: salt
+  - qty: 30
+    name: msg
+  - qty: 50
+    name: ginger paste
+  - qty: 40
+    name: fish sauce
+  - qty: 20
+    name: garlic powder
+  - qty: 1000
+    unit: g
+    name: onion
+    note: "large weeknight dice"
+  - qty: 500
+    unit: ml
+    name: peanut oil
+```
 
-* Peanuts, but not too much, probably like 600-500 grams next time
-* sugar, probably like 40 grams ideal
+## Notes
 
-## Dry Mix
+- Fish sauce: anything not dry tbh
+- Peanuts: adds crunch, flavor and also bulk
+- Potentially add a bunch of cornstarch to the wet layer
 
-40 grams of chili powder
-800 grams peanuts
-40 gram salt
-30 gram msg
-20 gram garlic powder
-40 gram chicken powder
-50 gram sugar
+## Historical Versions
 
-## Wet Mix
-
-70 gram ginger paste
-
-## Oil Mix
-
-1.2kg onion large weeknight dice
-1 Tofu brick, pressed and crumbled
-500 gram peanut oil
-
-# V3
-
-## Dry Mix
-
-40 grams of chili powder
-1/2 container peanuts (all on hand)
-5 gram black pepper
-40 gram salt
-30 gram msg
-
-## Wet Mix
-
-50 gram ginger paste
-40 gram fish sauce
-20 gram garlic powder
-
-## Oil Mix
-
-1kg onion large weeknight dice
-500 gram peanut oil
-
--- fish sauce, anything not dry tbh
-+++ peanuts, adds crunch, flavor and also bulk
-
-potentially add a bunch of cornstarch to the wet layer
-
-# V2
+### V2
 
 70 grams of chili powder
 100 gram cashews
@@ -77,7 +63,7 @@ Also the main thing to replicate the texture of the
 
 - Ginger
 
-# V1
+### V1
 
 70 grams of chili powder
 70 grams peanut butter
@@ -93,7 +79,7 @@ Also the main thing to replicate the texture of the
 1000 gram peanut oil
 120 gram garlic
 
-### Feedback
+#### Feedback
 
 major subtract: Black Pepper
 minor subtract: Regular Pepper

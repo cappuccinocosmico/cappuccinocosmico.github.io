@@ -1,25 +1,45 @@
-### V1 
-Notes for improvement
-- More time is a good idea, I pulled it out at 22ish hours out of an abundance of caution. I feel like going up to 155 is a good move, plus actually going for the 36 hours is probably not a bad idea.
-- Good idea to absolutely remove all liquid from bag prior to sous vide. Save liquid for other stuff.
-- Adding another 5-10 grams of regular salt is probably a good idea.
-- More sugar is also pretty safe.
-- Grated onion not an important edition.
-- Extra Stuff like mustard or other spices are a good idea.
+---
+title: Sous Vide Spare Ribs
+---
 
+## Ingredients
 
+```yaml
+ingredients:
+  - qty: 1
+    unit: whole
+    name: rack of spare ribs
+  - qty: 12
+    name: garlic salt
+  - qty: 4
+    name: msg
+  - qty: 10
+    name: sugar
+  - qty: 0.5
+    unit: whole
+    name: large grated onion
+```
+
+## Instructions
+
+1. Prepare spare ribs and season with garlic salt, MSG, sugar, and grated onion
+2. Sous vide at 150-155°F for 24-36 hours
+3. Remove all liquid from bag prior to sous vide
+4. Broil for 10 minutes
+
+## History
+
+### V1
+Notes for improvement:
+- More time is a good idea. Consider going up to 155°F and aiming for the full 36 hours.
+- Remove all liquid from bag prior to sous vide. Save liquid for other uses.
+- Add another 5-10 grams of regular salt.
+- More sugar is also safe to add.
+- Grated onion is not essential.
+- Extra items like mustard or other spices are a good idea to experiment with.
 
 ### V0
 
-
-
-150-145 at 24 hours.
-
-10 minutes in broiler.
-
-- 1 rack of spare ribs
-- 12 grams garlic salt 
-- 4 grams msg
-- 10 grams sugar 
-- 1/2 large grated onion
-
+- Temperature: 150-145°F at 24 hours
+- Finishing: 10 minutes in broiler
+- Original ingredient ratios as listed above

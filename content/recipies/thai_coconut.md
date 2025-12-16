@@ -9,33 +9,56 @@ author: Nicole Venner
 
 Tofu and Mushrooms sauteed seperately.
 
-- 2 tablespoons grated fresh ginger
+### Ingredients
 
-- 3 teaspoons red curry paste
-
-- 4 cups water
-
-- 2 tablespoons chicken powder 
-
-- 1 tablespoons fish sauce (forgot)
-
-- 1 tablespoon light brown sugar
-
-- 1 tablespoon white sugar
-
-- 2 (13.5 ounce) cans coconut milk
-
-- 1/2 pound fresh shiitake mushrooms, sliced
-
-- 2 containers tofu
-
-- 3 tablespoons fresh lime juice
-
-- salt to taste
-
-- 1/3 cup chopped fresh cilantro
-
-- 1/4 cup chopped Arugula
+```yaml
+- qty: 2
+  unit: tbsp
+  name: grated fresh ginger
+- qty: 3
+  unit: tsp
+  name: red curry paste
+- qty: 4
+  unit: cups
+  name: water
+- qty: 2
+  unit: tbsp
+  name: chicken powder
+- qty: 1
+  unit: tbsp
+  name: fish sauce
+  note: forgot
+- qty: 1
+  unit: tbsp
+  name: light brown sugar
+- qty: 1
+  unit: tbsp
+  name: white sugar
+- qty: 2
+  unit: cans
+  name: coconut milk
+  note: 13.5 ounce cans
+- qty: 1/2
+  unit: lb
+  name: fresh shiitake mushrooms
+  note: sliced
+- qty: 2
+  unit: containers
+  name: tofu
+- qty: 3
+  unit: tbsp
+  name: fresh lime juice
+- qty: 1
+  unit: whole
+  name: salt
+  note: to taste
+- qty: 1/3
+  unit: cups
+  name: chopped fresh cilantro
+- qty: 1/4
+  unit: cups
+  name: chopped Arugula
+```
 
 ## Notes for Next Time
 
@@ -49,30 +72,56 @@ less coconut milk, maybe 2 cans, or even one can
 
 Sautee tofu and mushrooms as high as you can go on a stove, if it starts sticking uncontrollably give up and try something else. Then add all ingredients together.
 
-- 2 tablespoons grated fresh ginger
+### Ingredients
 
-- 3 teaspoons red curry paste
-
-- 4 cups water
-
-- 4 tablespoons chicken powder (less next time, start with 2 or something)
-
-- 0 tablespoons fish sauce (forgot)
-
-- 1 tablespoon light brown sugar
-
-- 1 tablespoon white sugar
-
-- 3 (13.5 ounce) cans coconut milk
-
-- 1/2 pound fresh shiitake mushrooms, sliced
-
-- 2 containers tofu
-
-- 6 tablespoons fresh lime juice (adjusted on the fly from 2 tablespoons)
-
-- salt to taste
-
-- 1/4 cup chopped fresh cilantro
-
-- Small Quantity of Arugula
+```yaml
+- qty: 2
+  unit: tbsp
+  name: grated fresh ginger
+- qty: 3
+  unit: tsp
+  name: red curry paste
+- qty: 4
+  unit: cups
+  name: water
+- qty: 4
+  unit: tbsp
+  name: chicken powder
+  note: less next time, start with 2 or something
+- qty: 0
+  unit: tbsp
+  name: fish sauce
+  note: forgot
+- qty: 1
+  unit: tbsp
+  name: light brown sugar
+- qty: 1
+  unit: tbsp
+  name: white sugar
+- qty: 3
+  unit: cans
+  name: coconut milk
+  note: 13.5 ounce cans
+- qty: 1/2
+  unit: lb
+  name: fresh shiitake mushrooms
+  note: sliced
+- qty: 2
+  unit: containers
+  name: tofu
+- qty: 6
+  unit: tbsp
+  name: fresh lime juice
+  note: adjusted on the fly from 2 tablespoons
+- qty: 1
+  unit: whole
+  name: salt
+  note: to taste
+- qty: 1/4
+  unit: cups
+  name: chopped fresh cilantro
+- qty: 1
+  unit: whole
+  name: Arugula
+  note: Small Quantity
+```

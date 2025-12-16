@@ -1,12 +1,45 @@
-- 
-2kg/5lb potatoes
+---
+title: Shepherd's Pie
+---
 
+## Ingredients
 
-# Meat Mixture
-3 cups tvp 
-- carmelize in microwave, hydrate to taste, add msg salt and liquid aminos, 
-2.5 small onions 
-1/3 lb white mushrooms
-dried rosemary 1 tbpsp
-1/4 cup flour 
-Katchup - not a lot probably 1 tbsp
+```yaml
+potatoes:
+  - qty: 2
+    unit: kg
+    name: potatoes
+    note: "5lb equivalent"
+
+tvp:
+  - qty: 3
+    unit: cups
+    name: textured vegetable protein
+    note: "caramelize in microwave, hydrate to taste, add msg salt and liquid aminos"
+
+onions:
+  - qty: 2.5
+    unit: small
+    name: onions
+
+white_mushrooms:
+  - qty: 0.33
+    unit: lb
+    name: white mushrooms
+
+rosemary:
+  - qty: 1
+    unit: tbsp
+    name: dried rosemary
+
+flour:
+  - qty: 0.25
+    unit: cup
+    name: flour
+
+ketchup:
+  - qty: 1
+    unit: tbsp
+    name: ketchup
+    note: "not a lot"
+```

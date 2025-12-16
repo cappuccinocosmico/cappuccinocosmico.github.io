@@ -1,29 +1,96 @@
-Base:
+---
+title: Carbanara
+---
 
-▪650g (1 1/2 lbs) thick cut bacon
-▪150g (5.3 oz) Parmigiano Reggiano cheese, aged 18 months
-▪150g (5.3 oz) Pecorino Romano cheese
-▪3 large eggs
-▪9 egg yolks
-▪5-6g (2t) cracked black pepper
-▪10g (4t) cornstarch
-▪Olive oil
-▪115mL (1/2c) water
-▪900g (2lbs) spaghetti
-▪2250g/mL (8 cups) water
-▪10g (2t) salt
+## Base Ingredients
 
-Modified
+```yaml
+- qty: 650
+  name: thick cut bacon
 
-▪454g (1 ) thick cut bacon
-▪150g (5.3 oz) Parmigiano Reggiano cheese, aged 18 months
-▪150g (5.3 oz) Pecorino Romano cheese
-▪6 large eggs
-▪6 Tablespoons of Soy Lecethin
-▪5-6g (2t) cracked black pepper
-▪2g (1/2 tb) of xantham gum
-▪Olive oil
-▪115mL (1/2c) water
-▪900g (2lbs) spaghetti
-▪2250g/mL (8 cups) water
-▪10g (2t) salt
+- qty: 150
+  name: Parmigiano Reggiano cheese
+  note: aged 18 months
+
+- qty: 150
+  name: Pecorino Romano cheese
+
+- qty: 3
+  unit: whole
+  name: large eggs
+
+- qty: 9
+  unit: whole
+  name: egg yolks
+
+- qty: 5
+  unit: tsp
+  name: cracked black pepper
+
+- qty: 10
+  name: cornstarch
+
+- name: Olive oil
+
+- qty: 115
+  unit: mL
+  name: water
+
+- qty: 900
+  name: spaghetti
+
+- qty: 2250
+  unit: mL
+  name: water
+
+- qty: 10
+  unit: tsp
+  name: salt
+```
+
+## Modified Ingredients
+
+```yaml
+- qty: 454
+  name: thick cut bacon
+
+- qty: 150
+  name: Parmigiano Reggiano cheese
+  note: aged 18 months
+
+- qty: 150
+  name: Pecorino Romano cheese
+
+- qty: 6
+  unit: whole
+  name: large eggs
+
+- qty: 6
+  unit: tbsp
+  name: Soy Lecithin
+
+- qty: 5
+  unit: tsp
+  name: cracked black pepper
+
+- qty: 2
+  unit: tbsp
+  name: xanthan gum
+
+- name: Olive oil
+
+- qty: 115
+  unit: mL
+  name: water
+
+- qty: 900
+  name: spaghetti
+
+- qty: 2250
+  unit: mL
+  name: water
+
+- qty: 10
+  unit: tsp
+  name: salt
+```

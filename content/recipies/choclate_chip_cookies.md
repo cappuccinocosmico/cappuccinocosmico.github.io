@@ -4,17 +4,39 @@ title: "Chocolate Chip Cookies"
 
 ## Ingredients
 
-- 220g (2 sticks/1 cup) nice butter
-- 300g (1.5 cups) granulated sugar
-- 15g (2 teaspoons) molasses
-- 2 large eggs + 1 yolk
-- 4g (1.25 teaspoons) vanilla extract
-- 8oz/200g of 70% cacao nice baking chocolate (bars not chips)
-- 330g (2.33 cups) AP flour
-- 1/2 teaspoon baking soda
-- 1/4 teaspoon baking powder
-- 7g (1.25 teaspoons) salt
-- Flaky salt for topping
+```yaml
+- qty: 220
+  name: nice butter
+  note: "2 sticks/1 cup"
+- qty: 300
+  name: granulated sugar
+  note: "1.5 cups"
+- qty: 15
+  name: molasses
+  note: "2 teaspoons"
+- qty: 2
+  unit: whole
+  name: large eggs + 1 yolk
+- qty: 4
+  name: vanilla extract
+  note: "1.25 teaspoons"
+- qty: 200
+  name: 70% cacao nice baking chocolate
+  note: "8oz, bars not chips"
+- qty: 330
+  name: AP flour
+  note: "2.33 cups"
+- qty: 0.5
+  unit: tsp
+  name: baking soda
+- qty: 0.25
+  unit: tsp
+  name: baking powder
+- qty: 7
+  name: salt
+  note: "1.25 teaspoons"
+- name: flaky salt for topping
+```
 
 ## Instructions
 

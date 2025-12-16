@@ -1,44 +1,79 @@
-# V0
+---
+title: Dynamite Rice
+---
 
-- One 2lb bag of tillapia
+## Ingredients
 
-- 4 cups white rice 
-- 5 cups water 
-- 1/2 cup rice vinegar 
-- 1/4 cup sugar
+```yaml
+- qty: 1
+  unit: whole
+  name: 2lb bag of tillapia
 
-- 50 grams miso 
-- MSG + Salt
-- 1 jar of mayo
-- 200 grams of siracha 
-- 20 gram garlic powder 
+- qty: 4
+  unit: cups
+  name: white rice
 
+- qty: 5
+  unit: cups
+  name: water
 
+- qty: 0.5
+  unit: cups
+  name: rice vinegar
 
-For the Rice:
+- qty: 0.25
+  unit: cups
+  name: sugar
 
-    1 quart uncooked medium-grain white rice (such as Calrose variety)
+- qty: 50
+  unit: g
+  name: miso
 
-    1.25 quart water
+- qty: 1
+  unit: whole
+  name: jar of mayo
 
-    12 tablespoons rice vinegar
+- qty: 200
+  unit: g
+  name: siracha
 
-    8 teaspoons white sugar
+- qty: 20
+  unit: g
+  name: garlic powder
 
-    4 teaspoons kosher salt
+- qty: 1
+  unit: whole
+  name: msg and salt
 
-For the Dynamite Topping:
+- qty: 1
+  unit: quart
+  name: bay scallops
 
-    2 ⅔ cups mayonnaise
+- qty: 48
+  unit: whole
+  name: large shrimp
+  note: peeled, deveined, cut into 1/2-inch pieces
 
-    4 tablespoons soy sauce
+- qty: 2.67
+  unit: cups
+  name: mayonnaise
 
-    2 teaspoons toasted sesame oil
+- qty: 4
+  unit: tbsp
+  name: soy sauce
 
-    8 tablespoons Sriracha hot sauce
+- qty: 2
+  unit: tsp
+  name: toasted sesame oil
 
-    1 quart bay scallops
+- qty: 8
+  unit: tbsp
+  name: sriracha hot sauce
 
-    48 peeled and deveined large shrimp, cut into 1/2-inch pieces
+- qty: 4
+  unit: pinches
+  name: cayenne pepper
+  note: or to taste
+```
 
-    4 pinches cayenne pepper, or to taste
+## Instructions
