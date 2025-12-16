@@ -9,6 +9,14 @@ struct Frontmatter {
     title: Option<String>,
 }
 
+#[derive(Debug, Deserialize, Clone)]
+struct YamlIngredient {
+    qty: Option<f64>,
+    unit: Option<String>,
+    name: String,
+    note: Option<String>,
+}
+
 struct ContentItem {
     slug: String,
     title: String,
@@ -18,9 +26,16 @@ struct ContentItem {
 struct Recipe {
     slug: String,
     title: String,
-    ingredients: Vec<String>,
+    ingredients: Vec<Ingredient>,
     instructions_html: String,
     history: Vec<HistoryEntry>,
+}
+
+struct Ingredient {
+    qty: Option<f64>,
+    unit: String,
+    name: String,
+    note: String,
 }
 
 struct HistoryEntry {
@@ -51,12 +66,22 @@ fn main() {
     writeln!(f, "}}").unwrap();
     writeln!(f).unwrap();
 
+    // Generate Ingredient struct
+    writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
+    writeln!(f, "pub struct Ingredient {{").unwrap();
+    writeln!(f, "    pub qty: Option<f64>,").unwrap();
+    writeln!(f, "    pub unit: &'static str,").unwrap();
+    writeln!(f, "    pub name: &'static str,").unwrap();
+    writeln!(f, "    pub note: &'static str,").unwrap();
+    writeln!(f, "}}").unwrap();
+    writeln!(f).unwrap();
+
     // Generate Recipe struct
     writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
     writeln!(f, "pub struct Recipe {{").unwrap();
     writeln!(f, "    pub slug: &'static str,").unwrap();
     writeln!(f, "    pub title: &'static str,").unwrap();
-    writeln!(f, "    pub ingredients: &'static [&'static str],").unwrap();
+    writeln!(f, "    pub ingredients: &'static [Ingredient],").unwrap();
     writeln!(f, "    pub instructions_html: &'static str,").unwrap();
     writeln!(f, "    pub history: &'static [HistoryEntry],").unwrap();
     writeln!(f, "}}").unwrap();
@@ -93,7 +118,16 @@ fn main() {
         // Write ingredients array
         writeln!(f, "        ingredients: &[").unwrap();
         for ingredient in &recipe.ingredients {
-            writeln!(f, "            \"{}\",", escape_string(ingredient)).unwrap();
+            writeln!(f, "            Ingredient {{").unwrap();
+            if let Some(qty) = ingredient.qty {
+                writeln!(f, "                qty: Some({}),", qty).unwrap();
+            } else {
+                writeln!(f, "                qty: None,").unwrap();
+            }
+            writeln!(f, "                unit: \"{}\",", escape_string(&ingredient.unit)).unwrap();
+            writeln!(f, "                name: \"{}\",", escape_string(&ingredient.name)).unwrap();
+            writeln!(f, "                note: \"{}\",", escape_string(&ingredient.note)).unwrap();
+            writeln!(f, "            }},").unwrap();
         }
         writeln!(f, "        ],").unwrap();
 
@@ -229,7 +263,9 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
     let mut history = Vec::new();
 
     let mut current_section = "";
-    let mut current_history_entry: Option<(String, String, String)> = None; // (date, title, notes)
+    let mut current_history_entry: Option<(String, String, String)> = None;
+    let mut yaml_buffer = String::new();
+    let mut in_yaml_block = false;
 
     for line in body.lines() {
         let trimmed = line.trim();
@@ -238,6 +274,19 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
             current_section = "ingredients";
             continue;
         } else if trimmed.starts_with("## Instructions") {
+            // Parse any accumulated YAML
+            if !yaml_buffer.is_empty() {
+                if let Ok(parsed) = serde_yaml::from_str::<Vec<YamlIngredient>>(&yaml_buffer) {
+                    ingredients = parsed.into_iter().map(|i| Ingredient {
+                        qty: i.qty,
+                        unit: i.unit.unwrap_or_else(|| "g".to_string()),
+                        name: i.name,
+                        note: i.note.unwrap_or_default(),
+                    }).collect();
+                }
+                yaml_buffer.clear();
+                in_yaml_block = false;
+            }
             current_section = "instructions";
             continue;
         } else if trimmed.starts_with("## History") {
@@ -262,15 +311,18 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
 
         match current_section {
             "ingredients" => {
-                if trimmed.starts_with('-') || trimmed.starts_with('*') || trimmed.starts_with("▪") {
-                    let ingredient = trimmed.trim_start_matches('-')
-                        .trim_start_matches('*')
-                        .trim_start_matches("▪")
-                        .trim()
-                        .to_string();
-                    if !ingredient.is_empty() {
-                        ingredients.push(ingredient);
-                    }
+                // Check for YAML code fence
+                if trimmed.starts_with("```yaml") {
+                    in_yaml_block = true;
+                    continue;
+                } else if trimmed.starts_with("```") && in_yaml_block {
+                    in_yaml_block = false;
+                    continue;
+                }
+
+                if in_yaml_block {
+                    yaml_buffer.push_str(line);
+                    yaml_buffer.push('\n');
                 }
             }
             "instructions" => {
