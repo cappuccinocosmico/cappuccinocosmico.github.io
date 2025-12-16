@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn RecipeInstructions(html: &'static str) -> Element {
+pub fn RecipeInstructions(html: String) -> Element {
     rsx! {
         div {
             class: "recipe-instructions",

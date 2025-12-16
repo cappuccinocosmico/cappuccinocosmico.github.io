@@ -1,158 +1,39 @@
 use pulldown_cmark::{html, Parser};
 use serde::Deserialize;
+use num_rational::Rational64;
+use crate::models::{ContentItem, Recipe, Ingredient, HistoryEntry};
+
+#[cfg(feature = "server")]
 use std::fs;
-use std::io::Write;
+#[cfg(feature = "server")]
 use std::path::Path;
 
+#[cfg(feature = "server")]
+use dioxus_fullstack::server_fn::ServerFnError;
+#[cfg(feature = "server")]
+use dioxus_fullstack::server;
+
+#[cfg(feature = "server")]
 #[derive(Debug, Deserialize)]
 struct Frontmatter {
     title: Option<String>,
 }
 
+#[cfg(feature = "server")]
 #[derive(Debug, Deserialize, Clone)]
 struct YamlIngredient {
-    qty: Option<f64>,
+    qty: Option<String>,
     unit: Option<String>,
     name: String,
     note: Option<String>,
 }
 
-struct ContentItem {
-    slug: String,
-    title: String,
-    html: String,
-}
-
-struct Recipe {
-    slug: String,
-    title: String,
-    ingredients: Vec<Ingredient>,
-    instructions_html: String,
-    history: Vec<HistoryEntry>,
-}
-
-struct Ingredient {
-    qty: Option<f64>,
-    unit: String,
-    name: String,
-    note: String,
-}
-
-struct HistoryEntry {
-    date: String,
-    title: String,
-    notes_html: String,
-}
-
-fn main() {
-    println!("cargo:rerun-if-changed=content/");
-
-    let out_dir = std::env::var("OUT_DIR").unwrap();
-    let dest_path = Path::new(&out_dir).join("generated_content.rs");
-    let mut f = fs::File::create(&dest_path).unwrap();
-
-    // Process blogs (unchanged)
-    let blogs = process_blog_directory("content/blog");
-
-    // Process recipes (new structured format)
-    let recipes = process_recipe_directory("content/recipies");
-
-    // Generate ContentItem struct for blogs
-    writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
-    writeln!(f, "pub struct ContentItem {{").unwrap();
-    writeln!(f, "    pub slug: &'static str,").unwrap();
-    writeln!(f, "    pub title: &'static str,").unwrap();
-    writeln!(f, "    pub html: &'static str,").unwrap();
-    writeln!(f, "}}").unwrap();
-    writeln!(f).unwrap();
-
-    // Generate Ingredient struct
-    writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
-    writeln!(f, "pub struct Ingredient {{").unwrap();
-    writeln!(f, "    pub qty: Option<f64>,").unwrap();
-    writeln!(f, "    pub unit: &'static str,").unwrap();
-    writeln!(f, "    pub name: &'static str,").unwrap();
-    writeln!(f, "    pub note: &'static str,").unwrap();
-    writeln!(f, "}}").unwrap();
-    writeln!(f).unwrap();
-
-    // Generate Recipe struct
-    writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
-    writeln!(f, "pub struct Recipe {{").unwrap();
-    writeln!(f, "    pub slug: &'static str,").unwrap();
-    writeln!(f, "    pub title: &'static str,").unwrap();
-    writeln!(f, "    pub ingredients: &'static [Ingredient],").unwrap();
-    writeln!(f, "    pub instructions_html: &'static str,").unwrap();
-    writeln!(f, "    pub history: &'static [HistoryEntry],").unwrap();
-    writeln!(f, "}}").unwrap();
-    writeln!(f).unwrap();
-
-    // Generate HistoryEntry struct
-    writeln!(f, "#[derive(Debug, Clone, PartialEq)]").unwrap();
-    writeln!(f, "pub struct HistoryEntry {{").unwrap();
-    writeln!(f, "    pub date: &'static str,").unwrap();
-    writeln!(f, "    pub title: &'static str,").unwrap();
-    writeln!(f, "    pub notes_html: &'static str,").unwrap();
-    writeln!(f, "}}").unwrap();
-    writeln!(f).unwrap();
-
-    // Generate blogs array
-    writeln!(f, "pub static BLOGS: &[ContentItem] = &[").unwrap();
-    for item in blogs {
-        writeln!(f, "    ContentItem {{").unwrap();
-        writeln!(f, "        slug: \"{}\",", escape_string(&item.slug)).unwrap();
-        writeln!(f, "        title: \"{}\",", escape_string(&item.title)).unwrap();
-        writeln!(f, "        html: r#\"{}\"#,", item.html).unwrap();
-        writeln!(f, "    }},").unwrap();
-    }
-    writeln!(f, "];").unwrap();
-    writeln!(f).unwrap();
-
-    // Generate recipes array
-    writeln!(f, "pub static RECIPES: &[Recipe] = &[").unwrap();
-    for recipe in recipes {
-        writeln!(f, "    Recipe {{").unwrap();
-        writeln!(f, "        slug: \"{}\",", escape_string(&recipe.slug)).unwrap();
-        writeln!(f, "        title: \"{}\",", escape_string(&recipe.title)).unwrap();
-
-        // Write ingredients array
-        writeln!(f, "        ingredients: &[").unwrap();
-        for ingredient in &recipe.ingredients {
-            writeln!(f, "            Ingredient {{").unwrap();
-            if let Some(qty) = ingredient.qty {
-                writeln!(f, "                qty: Some({}),", qty).unwrap();
-            } else {
-                writeln!(f, "                qty: None,").unwrap();
-            }
-            writeln!(f, "                unit: \"{}\",", escape_string(&ingredient.unit)).unwrap();
-            writeln!(f, "                name: \"{}\",", escape_string(&ingredient.name)).unwrap();
-            writeln!(f, "                note: \"{}\",", escape_string(&ingredient.note)).unwrap();
-            writeln!(f, "            }},").unwrap();
-        }
-        writeln!(f, "        ],").unwrap();
-
-        writeln!(f, "        instructions_html: r#\"{}\"#,", recipe.instructions_html).unwrap();
-
-        // Write history array
-        writeln!(f, "        history: &[").unwrap();
-        for entry in &recipe.history {
-            writeln!(f, "            HistoryEntry {{").unwrap();
-            writeln!(f, "                date: \"{}\",", escape_string(&entry.date)).unwrap();
-            writeln!(f, "                title: \"{}\",", escape_string(&entry.title)).unwrap();
-            writeln!(f, "                notes_html: r#\"{}\"#,", entry.notes_html).unwrap();
-            writeln!(f, "            }},").unwrap();
-        }
-        writeln!(f, "        ],").unwrap();
-
-        writeln!(f, "    }},").unwrap();
-    }
-    writeln!(f, "];").unwrap();
-}
-
-fn process_blog_directory(dir: &str) -> Vec<ContentItem> {
+/// Parse all blog posts from content/blog directory (server-side only)
+#[cfg(feature = "server")]
+pub fn get_blogs() -> Vec<ContentItem> {
     let mut items = Vec::new();
 
-    let path = Path::new(dir);
+    let path = Path::new("content/blog");
     if !path.exists() {
         return items;
     }
@@ -202,10 +83,12 @@ fn process_blog_directory(dir: &str) -> Vec<ContentItem> {
     items
 }
 
-fn process_recipe_directory(dir: &str) -> Vec<Recipe> {
+/// Parse all recipes from content/recipies directory (server-side only)
+#[cfg(feature = "server")]
+pub fn get_recipes() -> Vec<Recipe> {
     let mut recipes = Vec::new();
 
-    let path = Path::new(dir);
+    let path = Path::new("content/recipies");
     if !path.exists() {
         return recipes;
     }
@@ -254,6 +137,7 @@ fn process_recipe_directory(dir: &str) -> Vec<Recipe> {
     recipes
 }
 
+#[cfg(feature = "server")]
 fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
     let (title, body) = parse_content(content, &slug);
 
@@ -278,7 +162,7 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
             if !yaml_buffer.is_empty() {
                 if let Ok(parsed) = serde_yaml::from_str::<Vec<YamlIngredient>>(&yaml_buffer) {
                     ingredients = parsed.into_iter().map(|i| Ingredient {
-                        qty: i.qty,
+                        qty: i.qty.and_then(|s| parse_quantity(&s)),
                         unit: i.unit.unwrap_or_else(|| "g".to_string()),
                         name: i.name,
                         note: i.note.unwrap_or_default(),
@@ -358,6 +242,7 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
     })
 }
 
+#[cfg(feature = "server")]
 fn parse_content(content: &str, default_slug: &str) -> (String, String) {
     // Check if content starts with YAML frontmatter
     if content.starts_with("---") {
@@ -378,6 +263,52 @@ fn parse_content(content: &str, default_slug: &str) -> (String, String) {
     (title, content.to_string())
 }
 
+#[cfg(feature = "server")]
+fn parse_quantity(s: &str) -> Option<Rational64> {
+    let s = s.trim();
+
+    // Handle mixed fractions like "1 1/3"
+    if let Some(space_pos) = s.find(' ') {
+        let whole_part = s[..space_pos].trim();
+        let fraction_part = s[space_pos + 1..].trim();
+
+        let whole: i64 = whole_part.parse().ok()?;
+        let frac = parse_simple_fraction(fraction_part)?;
+
+        // Convert mixed fraction: whole + frac
+        return Some(Rational64::from_integer(whole) + frac);
+    }
+
+    // Handle simple fractions like "4/3"
+    if s.contains('/') {
+        return parse_simple_fraction(s);
+    }
+
+    // Handle integers like "1"
+    if let Ok(n) = s.parse::<i64>() {
+        return Some(Rational64::from_integer(n));
+    }
+
+    None
+}
+
+#[cfg(feature = "server")]
+fn parse_simple_fraction(s: &str) -> Option<Rational64> {
+    let parts: Vec<&str> = s.split('/').collect();
+    assert!(parts.len() <= 2, "fraction must have at most one '/' character");
+
+    if parts.len() != 2 {
+        return None;
+    }
+
+    let numer: i64 = parts[0].trim().parse().ok()?;
+    let denom: i64 = parts[1].trim().parse().ok()?;
+    assert!(denom != 0, "fraction denominator cannot be zero");
+
+    Some(Rational64::new(numer, denom))
+}
+
+#[cfg(feature = "server")]
 fn slug_to_title(slug: &str) -> String {
     let skip_words = ["and", "or", "the", "a", "an", "of", "in", "on", "at", "to", "for"];
 
@@ -393,6 +324,7 @@ fn slug_to_title(slug: &str) -> String {
         .join(" ")
 }
 
+#[cfg(feature = "server")]
 fn capitalize_word(word: &str) -> String {
     let mut chars = word.chars();
     match chars.next() {
@@ -401,6 +333,7 @@ fn capitalize_word(word: &str) -> String {
     }
 }
 
+#[cfg(feature = "server")]
 fn markdown_to_html(markdown: &str) -> String {
     let parser = Parser::new(markdown);
     let mut html_output = String::new();
@@ -408,8 +341,35 @@ fn markdown_to_html(markdown: &str) -> String {
     html_output
 }
 
-fn escape_string(s: &str) -> String {
-    s.replace('\\', "\\\\")
-        .replace('"', "\\\"")
-        .replace('\n', "\\n")
+// Server functions for fetching content (only available on server side)
+#[cfg(feature = "server")]
+#[server(endpoint = "get_all_blogs")]
+pub async fn get_all_blogs_server() -> Result<Vec<ContentItem>, ServerFnError> {
+    Ok(get_blogs())
+}
+
+#[cfg(feature = "server")]
+#[server(endpoint = "get_blog_by_slug")]
+pub async fn get_blog_by_slug_server(slug: String) -> Result<ContentItem, ServerFnError> {
+    let blogs = get_blogs();
+    blogs.iter()
+        .find(|b| b.slug == slug)
+        .cloned()
+        .ok_or_else(|| ServerFnError::new("Blog not found"))
+}
+
+#[cfg(feature = "server")]
+#[server(endpoint = "get_all_recipes")]
+pub async fn get_all_recipes_server() -> Result<Vec<Recipe>, ServerFnError> {
+    Ok(get_recipes())
+}
+
+#[cfg(feature = "server")]
+#[server(endpoint = "get_recipe_by_slug")]
+pub async fn get_recipe_by_slug_server(slug: String) -> Result<Recipe, ServerFnError> {
+    let recipes = get_recipes();
+    recipes.iter()
+        .find(|r| r.slug == slug)
+        .cloned()
+        .ok_or_else(|| ServerFnError::new("Recipe not found"))
 }

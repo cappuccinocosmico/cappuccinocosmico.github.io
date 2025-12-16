@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
-use crate::HistoryEntry;
+use crate::models::HistoryEntry;
 
 #[component]
-pub fn RecipeHistory(entries: &'static [HistoryEntry]) -> Element {
+pub fn RecipeHistory(entries: Vec<HistoryEntry>) -> Element {
     let mut show_history = use_signal(|| false);
 
     if entries.is_empty() {
