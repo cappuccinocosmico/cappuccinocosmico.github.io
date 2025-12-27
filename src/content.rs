@@ -9,9 +9,7 @@ use std::fs;
 use std::path::Path;
 
 #[cfg(feature = "server")]
-use dioxus_fullstack::server_fn::ServerFnError;
-#[cfg(feature = "server")]
-use dioxus_fullstack::server;
+use server_fn::{ServerFnError, server};
 
 #[cfg(feature = "server")]
 #[derive(Debug, Deserialize)]

@@ -1,9 +1,7 @@
 use dioxus::prelude::*;
 
 #[cfg(feature = "server")]
-use dioxus_fullstack::server_fn::ServerFnError;
-#[cfg(feature = "server")]
-use dioxus_fullstack::server;
+use server_fn::{ServerFnError, server};
 
 mod components;
 mod content;
