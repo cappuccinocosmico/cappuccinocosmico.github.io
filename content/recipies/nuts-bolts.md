@@ -20,7 +20,7 @@ Converted to metric
 1kg butter (2 lbs)
 2 tbsp garlic 
 2 tbsp salt 
-1/2 cup worchestishire sauce.
+1/2 cup worchestishire sauce. - 125 grams 
 
 
 # experiment 1 
