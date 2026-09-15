@@ -1,145 +1,63 @@
-use pulldown_cmark::{html, Parser};
-use serde::Deserialize;
-use num_rational::Rational64;
-use crate::models::{ContentItem, Recipe, Ingredient, HistoryEntry};
-
-#[cfg(feature = "server")]
 use std::fs;
-#[cfg(feature = "server")]
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-#[cfg(feature = "server")]
-use server_fn::{ServerFnError, server};
+use num_rational::Rational64;
+use pulldown_cmark::{Parser, html};
+use serde::Deserialize;
 
-#[cfg(feature = "server")]
-#[derive(Debug, Deserialize)]
-struct Frontmatter {
-    title: Option<String>,
+pub mod models;
+
+#[cfg(feature = "embed")]
+pub mod embed;
+
+pub fn content_dir() -> &'static Path {
+    Path::new(env!("CARGO_MANIFEST_DIR"))
 }
 
-#[cfg(feature = "server")]
-#[derive(Debug, Deserialize, Clone)]
-struct YamlIngredient {
-    qty: Option<String>,
-    unit: Option<String>,
-    name: String,
-    note: Option<String>,
+pub fn blogs_dir() -> PathBuf {
+    content_dir().join("blog")
 }
 
-/// Parse all blog posts from content/blog directory (server-side only)
-#[cfg(feature = "server")]
-pub fn get_blogs() -> Vec<ContentItem> {
-    let mut items = Vec::new();
-
-    let path = Path::new("content/blog");
-    if !path.exists() {
-        return items;
-    }
-
-    let entries = match fs::read_dir(path) {
-        Ok(entries) => entries,
-        Err(_) => return items,
-    };
-
-    for entry in entries {
-        let entry = match entry {
-            Ok(e) => e,
-            Err(_) => continue,
-        };
-
-        let path = entry.path();
-        if !path.is_file() {
-            continue;
-        }
-
-        if let Some(ext) = path.extension() {
-            if ext != "md" {
-                continue;
-            }
-        } else {
-            continue;
-        }
-
-        let content = match fs::read_to_string(&path) {
-            Ok(c) => c,
-            Err(_) => continue,
-        };
-
-        let slug = path
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .unwrap_or("untitled")
-            .to_string();
-
-        let (title, markdown) = parse_content(&content, &slug);
-        let html = markdown_to_html(&markdown);
-
-        items.push(ContentItem { slug, title, html });
-    }
-
-    items.sort_by(|a, b| a.slug.cmp(&b.slug));
-    items
+pub fn recipes_dir() -> PathBuf {
+    content_dir().join("recipies")
 }
 
-/// Parse all recipes from content/recipies directory (server-side only)
-#[cfg(feature = "server")]
-pub fn get_recipes() -> Vec<Recipe> {
-    let mut recipes = Vec::new();
-
-    let path = Path::new("content/recipies");
-    if !path.exists() {
-        return recipes;
-    }
-
-    let entries = match fs::read_dir(path) {
-        Ok(entries) => entries,
-        Err(_) => return recipes,
-    };
-
-    for entry in entries {
-        let entry = match entry {
-            Ok(e) => e,
-            Err(_) => continue,
-        };
-
-        let path = entry.path();
-        if !path.is_file() {
-            continue;
-        }
-
-        if let Some(ext) = path.extension() {
-            if ext != "md" {
-                continue;
-            }
-        } else {
-            continue;
-        }
-
-        let content = match fs::read_to_string(&path) {
-            Ok(c) => c,
-            Err(_) => continue,
-        };
-
-        let slug = path
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .unwrap_or("untitled")
-            .to_string();
-
-        if let Some(recipe) = parse_recipe(&content, slug) {
-            recipes.push(recipe);
-        }
-    }
-
-    recipes.sort_by(|a, b| a.slug.cmp(&b.slug));
-    recipes
+pub fn get_blogs() -> Vec<models::ContentItem> {
+    collect_markdown(&blogs_dir())
+        .into_iter()
+        .map(|path| {
+            let slug = slug_of(&path);
+            let markdown = read_markdown(&path);
+            parse_blog(&markdown, &slug)
+        })
+        .collect()
 }
 
-#[cfg(feature = "server")]
-fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
-    let (title, body) = parse_content(content, &slug);
+pub fn get_recipes() -> Vec<models::Recipe> {
+    collect_markdown(&recipes_dir())
+        .into_iter()
+        .filter_map(|path| {
+            let slug = slug_of(&path);
+            let markdown = read_markdown(&path);
+            parse_recipe(&markdown, &slug)
+        })
+        .collect()
+}
 
-    // Split content into sections
+pub fn parse_blog(markdown: &str, slug: &str) -> models::ContentItem {
+    assert!(!slug.is_empty(), "blog slugs must not be empty");
+    let (title, body) = split_frontmatter(markdown, slug);
+    models::ContentItem {
+        slug: slug.to_string(),
+        title,
+        html: markdown_to_html(&body),
+    }
+}
+
+pub fn parse_recipe(markdown: &str, slug: &str) -> Option<models::Recipe> {
+    assert!(!slug.is_empty(), "recipe slugs must not be empty");
+    let (title, body) = split_frontmatter(markdown, slug);
+
     let mut ingredients = Vec::new();
     let mut instructions_md = String::new();
     let mut history = Vec::new();
@@ -156,10 +74,9 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
             current_section = "ingredients";
             continue;
         } else if trimmed.starts_with("## Instructions") {
-            // Parse any accumulated YAML
             if !yaml_buffer.is_empty() {
                 if let Ok(parsed) = serde_yaml::from_str::<Vec<YamlIngredient>>(&yaml_buffer) {
-                    ingredients = parsed.into_iter().map(|i| Ingredient {
+                    ingredients = parsed.into_iter().map(|i| models::Ingredient {
                         qty: i.qty.and_then(|s| parse_quantity(&s)),
                         unit: i.unit.unwrap_or_else(|| "g".to_string()),
                         name: i.name,
@@ -175,13 +92,11 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
             current_section = "history";
             continue;
         } else if trimmed.starts_with("###") && current_section == "history" {
-            // Save previous history entry if exists
             if let Some((date, title, notes)) = current_history_entry.take() {
                 let notes_html = markdown_to_html(&notes);
-                history.push(HistoryEntry { date, title, notes_html });
+                history.push(models::HistoryEntry { date, title, notes_html });
             }
 
-            // Parse new history entry header: ### YYYY-MM-DD - Title
             let header = trimmed.trim_start_matches("###").trim();
             if let Some(dash_pos) = header.find(" - ") {
                 let date = header[..dash_pos].trim().to_string();
@@ -193,7 +108,6 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
 
         match current_section {
             "ingredients" => {
-                // Check for YAML code fence
                 if trimmed.starts_with("```yaml") {
                     in_yaml_block = true;
                     continue;
@@ -223,16 +137,15 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
         }
     }
 
-    // Don't forget the last history entry
     if let Some((date, title, notes)) = current_history_entry {
         let notes_html = markdown_to_html(&notes);
-        history.push(HistoryEntry { date, title, notes_html });
+        history.push(models::HistoryEntry { date, title, notes_html });
     }
 
     let instructions_html = markdown_to_html(&instructions_md);
 
-    Some(Recipe {
-        slug,
+    Some(models::Recipe {
+        slug: slug.to_string(),
         title,
         ingredients,
         instructions_html,
@@ -240,9 +153,43 @@ fn parse_recipe(content: &str, slug: String) -> Option<Recipe> {
     })
 }
 
-#[cfg(feature = "server")]
-fn parse_content(content: &str, default_slug: &str) -> (String, String) {
-    // Check if content starts with YAML frontmatter
+#[derive(Debug, Deserialize)]
+struct Frontmatter {
+    title: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+struct YamlIngredient {
+    qty: Option<String>,
+    unit: Option<String>,
+    name: String,
+    note: Option<String>,
+}
+
+fn collect_markdown(dir: &Path) -> Vec<PathBuf> {
+    let mut paths = fs::read_dir(dir)
+        .unwrap_or_else(|err| panic!("content directory {} must be readable: {err}", dir.display()))
+        .filter_map(|entry| entry.ok())
+        .map(|entry| entry.path())
+        .filter(|path| path.is_file() && path.extension().is_some_and(|ext| ext == "md"))
+        .collect::<Vec<_>>();
+    paths.sort_by_key(|path| slug_of(path));
+    paths
+}
+
+fn read_markdown(path: &Path) -> String {
+    fs::read_to_string(path)
+        .unwrap_or_else(|err| panic!("content file {} must be readable: {err}", path.display()))
+}
+
+fn slug_of(path: &Path) -> String {
+    path.file_stem()
+        .and_then(|stem| stem.to_str())
+        .unwrap_or("untitled")
+        .to_string()
+}
+
+fn split_frontmatter(content: &str, default_slug: &str) -> (String, String) {
     if content.starts_with("---") {
         if let Some(end_pos) = content[3..].find("---") {
             let frontmatter_str = &content[3..end_pos + 3];
@@ -256,16 +203,12 @@ fn parse_content(content: &str, default_slug: &str) -> (String, String) {
         }
     }
 
-    // No frontmatter or no title in frontmatter, use filename
-    let title = slug_to_title(default_slug);
-    (title, content.to_string())
+    (slug_to_title(default_slug), content.to_string())
 }
 
-#[cfg(feature = "server")]
 fn parse_quantity(s: &str) -> Option<Rational64> {
     let s = s.trim();
 
-    // Handle mixed fractions like "1 1/3"
     if let Some(space_pos) = s.find(' ') {
         let whole_part = s[..space_pos].trim();
         let fraction_part = s[space_pos + 1..].trim();
@@ -273,16 +216,13 @@ fn parse_quantity(s: &str) -> Option<Rational64> {
         let whole: i64 = whole_part.parse().ok()?;
         let frac = parse_simple_fraction(fraction_part)?;
 
-        // Convert mixed fraction: whole + frac
         return Some(Rational64::from_integer(whole) + frac);
     }
 
-    // Handle simple fractions like "4/3"
     if s.contains('/') {
         return parse_simple_fraction(s);
     }
 
-    // Handle integers like "1"
     if let Ok(n) = s.parse::<i64>() {
         return Some(Rational64::from_integer(n));
     }
@@ -290,7 +230,6 @@ fn parse_quantity(s: &str) -> Option<Rational64> {
     None
 }
 
-#[cfg(feature = "server")]
 fn parse_simple_fraction(s: &str) -> Option<Rational64> {
     let parts: Vec<&str> = s.split('/').collect();
     assert!(parts.len() <= 2, "fraction must have at most one '/' character");
@@ -306,7 +245,6 @@ fn parse_simple_fraction(s: &str) -> Option<Rational64> {
     Some(Rational64::new(numer, denom))
 }
 
-#[cfg(feature = "server")]
 fn slug_to_title(slug: &str) -> String {
     let skip_words = ["and", "or", "the", "a", "an", "of", "in", "on", "at", "to", "for"];
 
@@ -322,7 +260,6 @@ fn slug_to_title(slug: &str) -> String {
         .join(" ")
 }
 
-#[cfg(feature = "server")]
 fn capitalize_word(word: &str) -> String {
     let mut chars = word.chars();
     match chars.next() {
@@ -331,43 +268,9 @@ fn capitalize_word(word: &str) -> String {
     }
 }
 
-#[cfg(feature = "server")]
 fn markdown_to_html(markdown: &str) -> String {
     let parser = Parser::new(markdown);
     let mut html_output = String::new();
     html::push_html(&mut html_output, parser);
     html_output
-}
-
-// Server functions for fetching content (only available on server side)
-#[cfg(feature = "server")]
-#[server(endpoint = "get_all_blogs")]
-pub async fn get_all_blogs_server() -> Result<Vec<ContentItem>, ServerFnError> {
-    Ok(get_blogs())
-}
-
-#[cfg(feature = "server")]
-#[server(endpoint = "get_blog_by_slug")]
-pub async fn get_blog_by_slug_server(slug: String) -> Result<ContentItem, ServerFnError> {
-    let blogs = get_blogs();
-    blogs.iter()
-        .find(|b| b.slug == slug)
-        .cloned()
-        .ok_or_else(|| ServerFnError::new("Blog not found"))
-}
-
-#[cfg(feature = "server")]
-#[server(endpoint = "get_all_recipes")]
-pub async fn get_all_recipes_server() -> Result<Vec<Recipe>, ServerFnError> {
-    Ok(get_recipes())
-}
-
-#[cfg(feature = "server")]
-#[server(endpoint = "get_recipe_by_slug")]
-pub async fn get_recipe_by_slug_server(slug: String) -> Result<Recipe, ServerFnError> {
-    let recipes = get_recipes();
-    recipes.iter()
-        .find(|r| r.slug == slug)
-        .cloned()
-        .ok_or_else(|| ServerFnError::new("Recipe not found"))
 }

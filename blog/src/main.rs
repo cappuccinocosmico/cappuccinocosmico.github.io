@@ -1,11 +1,10 @@
 use dioxus::prelude::*;
 
 #[cfg(feature = "server")]
-use server_fn::{ServerFnError, server};
+use dioxus::prelude::ServerFnError;
 
 mod components;
 mod content;
-mod models;
 mod routes;
 
 use components::Navbar;

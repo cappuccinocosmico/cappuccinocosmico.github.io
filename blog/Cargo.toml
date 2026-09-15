@@ -1,0 +1,19 @@
+[package]
+name = "blog"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+dioxus = { version = "0.7.1", features = ["router"] }
+dioxus-fullstack = { version = "0.7", features = ["server", "web"] }
+site-content = { workspace = true }
+num-rational = { workspace = true }
+
+
+[features]
+default = ["web", "server"]
+web = ["dioxus/web"]
+server = ["dioxus/server", "dioxus/fullstack"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]

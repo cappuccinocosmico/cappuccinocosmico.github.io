@@ -1,0 +1,14 @@
+[package]
+name = "site-content"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[features]
+embed = []
+
+[dependencies]
+num-rational = { workspace = true }
+pulldown-cmark = { workspace = true }
+serde = { workspace = true }
+serde_yaml = { workspace = true }

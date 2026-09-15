@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use crate::models::HistoryEntry;
+use site_content::models::HistoryEntry;
 
 #[component]
 pub fn RecipeHistory(entries: Vec<HistoryEntry>) -> Element {

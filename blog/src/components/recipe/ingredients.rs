@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use crate::models::Ingredient;
+use site_content::models::Ingredient;
 use num_rational::Rational64;
 
 fn format_quantity(qty: Rational64) -> String {

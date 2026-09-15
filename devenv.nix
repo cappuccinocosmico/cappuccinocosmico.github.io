@@ -15,11 +15,17 @@
     lld
     tailwindcss_4
     watchman
+    trunk
+    wasm-bindgen-cli
     # dioxus-cli
   ];
 
   # https://devenv.sh/languages/
-  languages.rust.enable = true;
+  languages.rust = {
+    enable = true;
+    channel = "stable";
+    targets = [ "wasm32-unknown-unknown" ];
+  };
 
   # https://devenv.sh/processes/
   # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
