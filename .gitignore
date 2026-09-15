@@ -11,4 +11,5 @@ devenv.local.yaml
 
 
 target
+dist
 node_modules
